@@ -10,6 +10,7 @@ import gigRoutes from './routes/gig.routes.js';
 import messageRoutes from './routes/message.routes.js';
 import orderRoutes from './routes/user.routes.js';
 import reviewRoutes from './routes/review.routes.js';
+import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 dotenv.config();
@@ -25,6 +26,8 @@ app.use('/api/v1/gigs', gigRoutes);
 app.use('/api/v1/orders', orderRoutes);
 app.use('/api/v1/reviews', reviewRoutes);
 app.use('/api/v1/messages', messageRoutes);
+
+app.use(errorHandler);
 
 try {
   await mongoose.connect(process.env.MONGO_URL)

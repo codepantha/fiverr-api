@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/user.model.js';
+import createError from '../utils/createError.js';
 
 const register = async (req, res, next) => {
   const { password } = req.body;
@@ -15,7 +16,7 @@ const register = async (req, res, next) => {
     });
     res.status(201).send('User created successfully!');
   } catch (err) {
-    res.status(500).json({ msg: 'something went wrong' });
+    next(err);
   }
 };
 
@@ -25,11 +26,11 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username });
 
-    if (!user) return res.status(404).send('User not found');
+    if (!user) return next(createError(404, 'User not found'));
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(400).send('Wrong username and password combination!');
+      return next(createError(401, 'Wrong username and password combination!'));
 
     delete user._doc.password;
 
@@ -43,7 +44,7 @@ const login = async (req, res, next) => {
 
     res.cookie('accessToken', token, { httpOnly: true }).status(200).send(user);
   } catch (err) {
-    res.status(500).send('Something went wrong');
+    next(err)
   }
 };
 
