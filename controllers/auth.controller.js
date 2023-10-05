@@ -44,8 +44,15 @@ const login = async (req, res, next) => {
 
     res.cookie('accessToken', token, { httpOnly: true }).status(200).send(user);
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
-export { register, login };
+const logout = async (req, res) => {
+  res
+    .clearCookie('accessToken', { sameSite: 'none', secure: true })
+    .status(200)
+    .send('User successfully logged out!');
+};
+
+export { register, login, logout };
