@@ -7,8 +7,8 @@ export const index = async (req, res, next) => {
   const filters = buildFilters(query);
 
   try {
-    const gigs = await Gig.find(filters);
-    res.status(200).json({ gigs, hits: gigs.length});
+    const gigs = await Gig.find(filters).sort({ [query.sort]: -1 });
+    res.status(200).json({ gigs, hits: gigs.length });
   } catch (err) {
     next(err);
   }
@@ -76,4 +76,4 @@ const buildFilters = (query) => {
   }
 
   return filters;
-}
+};
