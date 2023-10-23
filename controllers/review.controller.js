@@ -56,6 +56,15 @@ export const create = async (req, res, next) => {
   }
 };
 
+export const getReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ gigId: req.params.gigId });
+    res.status(200).json(reviews)
+  } catch (err) {
+    next(err)
+  }
+}
+
 const alreadyPostedReview = async (req) => {
   const review = await Review.findOne({
     gigId: req.body.gigId,
