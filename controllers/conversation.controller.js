@@ -36,7 +36,10 @@ export const create = async (req, res, next) => {
 
 export const show = async (req, res, next) => {
   try {
-    const conversation = await Conversation.findOne({ id: req.params.id });
+    const { sellerId, buyerId } = req.query;
+    const conversation = await Conversation.findOne({
+      $and: [{ sellerId }, { buyerId }]
+    });
     if (!conversation) return next(createError(404, 'Conversation not found!'));
 
     res.status(200).json(conversation);

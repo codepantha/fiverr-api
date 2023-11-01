@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(verifyToken);
 
 router.route('/').get(index).post(create);
-router.route('/:id').get(show).put(markAsRead);
+router.get('/single', show);
+router.route('/:id').put(markAsRead);
 
 export default router;

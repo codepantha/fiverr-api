@@ -34,7 +34,7 @@ app.use(errorHandler);
 try {
   await mongoose.connect(process.env.MONGO_URL);
 } catch (error) {
-  handleError(error);
+  console.log(error);
 }
 
 const PORT = process.env.PORT || 8000;
