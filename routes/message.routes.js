@@ -1,7 +1,12 @@
 import express from 'express';
+import { verifyToken } from '../middleware/jwt.js';
+import { create, index } from '../controllers/message.controller.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => res.send('test'))
+router.use(verifyToken)
+
+router.get('/:conversationId', index);
+router.post('/', create);
 
 export default router;

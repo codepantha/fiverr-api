@@ -9,7 +9,7 @@ import userRoutes from './routes/user.routes.js';
 import conversationRoutes from './routes/conversation.routes.js';
 import gigRoutes from './routes/gig.routes.js';
 import messageRoutes from './routes/message.routes.js';
-import orderRoutes from './routes/user.routes.js';
+import orderRoutes from './routes/order.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -34,7 +34,7 @@ app.use(errorHandler);
 try {
   await mongoose.connect(process.env.MONGO_URL);
 } catch (error) {
-  handleError(error);
+  console.log(error);
 }
 
 const PORT = process.env.PORT || 8000;
