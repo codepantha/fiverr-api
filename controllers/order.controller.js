@@ -19,8 +19,6 @@ export const index = async (req, res, next) => {
 export const intent = async (req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE);
 
-  console.log('REQ ID', req.params.id);
-
   const gig = await Gig.findById(req.params.id);
 
   const paymentIntent = await stripe.paymentIntents.create({
