@@ -60,7 +60,10 @@ const buildFilters = (query) => {
   const filters = {};
 
   if (query.userId) filters.userId = query.userId;
-  if (query.cat) filters.cat = query.cat;
+  if (query.cat) filters.cat = {
+    $regex: query.cat,
+    $options: 'i'
+  }
 
   if (query.min || query.max) {
     filters.price = {};

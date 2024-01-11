@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import mongoose from 'mongoose';
 
 import Gig from '../models/gig.model.js';
 import Order from '../models/order.model.js';
@@ -47,6 +48,9 @@ export const intent = async (req, res, next) => {
 };
 
 export const confirmOrder = async (req, res, next) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const order = await Order.findOneAndUpdate(
       { payment_intent: req.body.payment_intent },
@@ -54,11 +58,26 @@ export const confirmOrder = async (req, res, next) => {
         $set: {
           isCompleted: true
         }
-      }
+      },
+      { session }
     );
+
+    // Update the Gig sales within the same transaction
+    await Gig.findByIdAndUpdate(
+      order.gigId,
+      {
+        $inc: { sales: 1 }
+      },
+      { session }
+    );
+
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(200).send('Order has been confirmed.');
   } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
     next(err);
   }
 };
