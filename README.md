@@ -28,7 +28,7 @@
 
 # <h1 id="about-project">📖 GigHouse</h1>
 
-> GigHouse is the front-end for an online learning platform built with React.js and Tailwindcss.
+> GigHouse is the front-end for an online gig marketplace like upwork and fiverr build with React.js and Tailwindcss.
 
 ## 🛠 Built With <a id="built-with"></a>
 
