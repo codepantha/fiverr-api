@@ -28,7 +28,10 @@
 
 # <h1 id="about-project">📖 GigHouse</h1>
 
-> GigHouse is the front-end for an online gig marketplace like upwork and fiverr build with React.js and Tailwindcss.
+> GigHouse is the API for an online gig marketplace like upwork and fiverr build with Node and Express.js.
+
+## Front End 🚀
+<a href="https://github.com/codepantha/fiverr-clone-client">Click Me!</a>
 
 ## 🛠 Built With <a id="built-with"></a>
 
